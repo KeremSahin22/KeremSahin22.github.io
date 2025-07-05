@@ -76,6 +76,7 @@ cleanup();
 export default [
   build('commons'),
   build('home'),
+  build('blog'),
   build('categories'),
   build('page'),
   build('post'),

@@ -1,0 +1,71 @@
+/* Custom fix for phantom boxes issue */
+.post-preview {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Blog pagination fixes */
+#blog-pagination {
+  .pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    .page-item {
+      margin: 0 0.125rem;
+
+      &.page-number {
+        // Show page numbers on large screens
+        @media (max-width: 991.98px) {
+          display: none;
+        }
+
+        @media (min-width: 992px) {
+          display: block;
+        }
+      }
+
+      &.page-index {
+        // Show mobile indicator on small screens
+        @media (min-width: 992px) {
+          display: none;
+        }
+
+        @media (max-width: 991.98px) {
+          display: block;
+          margin: 0 0.5rem;
+        }
+      }
+
+      .page-link {
+        padding: 0.5rem 0.75rem;
+        margin: 0;
+        line-height: 1.25;
+        color: var(--text-color);
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 0.25rem;
+
+        &:hover {
+          color: var(--link-color);
+          background-color: var(--card-hover);
+          border-color: var(--link-color);
+        }
+      }
+
+      &.active .page-link {
+        color: var(--text-color);
+        background-color: var(--btn-active-bg);
+        border-color: var(--btn-active-border-color);
+      }
+
+      &.disabled .page-link {
+        color: var(--text-muted);
+        background-color: var(--card-bg);
+        border-color: var(--border-color);
+        cursor: not-allowed;
+      }
+    }
+  }
+}
