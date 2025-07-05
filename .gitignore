@@ -2,6 +2,7 @@
 .bundle
 vendor
 _posts_test
+Gemfile.lock
 # Jekyll cache
 .jekyll-cache
 .jekyll-metadata
