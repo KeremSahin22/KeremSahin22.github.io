@@ -1,7 +1,6 @@
 # Bundler cache
 .bundle
 vendor
-Gemfile.lock
 _posts_test
 # Jekyll cache
 .jekyll-cache
