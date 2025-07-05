@@ -23,11 +23,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   let currentPage = 1;
 
-  // Hide pagination if there's only one page
-  if (totalPages <= 1) {
+  // Hide pagination if there are no posts or only one page
+  if (totalPosts === 0 || totalPages <= 1) {
     paginationNav.style.display = 'none';
     return;
   }
+
+  // Show pagination when there are multiple pages
+  paginationNav.classList.add('show');
 
   // Initialize pagination
   totalPagesSpan.textContent = totalPages;

@@ -6,6 +6,13 @@
 
 /* Blog pagination fixes */
 #blog-pagination {
+  /* Prevent pagination flash before JavaScript loads */
+  display: none;
+  
+  &.show {
+    display: block;
+  }
+
   .pagination {
     display: flex;
     flex-wrap: wrap;
