@@ -4,5 +4,5 @@ Hi, I'm Kerem! I'm a second-year CS master's student at [Northeastern University
 
 My research focuses on mechanistic interpretability and training dynamics, with emphasis on understanding how neural networks form and represent concepts. Currently, I'm investigating concept representations in language models, exploring how these representations work across different languages, and studying the training dynamics that influence concept formation.
 
-Before starting my master's at Northeastern, I completed my bachelor's degree in Computer Science at [Bilkent University](https://w3.bilkent.edu.tr/bilkent/).
+Before starting my master's at Northeastern, I completed my bachelor's degree in CS at [Bilkent University](https://w3.bilkent.edu.tr/bilkent/).
 
