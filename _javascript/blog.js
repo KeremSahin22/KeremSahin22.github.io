@@ -2,7 +2,8 @@
  * Blog pagination functionality
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+// Function to handle pagination logic
+function initializeBlogPagination() {
   // Configuration
   const POSTS_PER_PAGE = 5;
   const MAX_VISIBLE_PAGES = 5;
@@ -19,17 +20,30 @@ document.addEventListener('DOMContentLoaded', function() {
   const totalPagesSpan = document.getElementById('total-pages');
   const pageIndexLi = document.querySelector('.page-index');
   const paginationNav = document.getElementById('blog-pagination');
+  
+  // Check if pagination elements exist
+  if (!paginationNav) {
+    console.warn('Blog pagination elements not found');
+    return;
+  }
+  
   const paginationUl = paginationNav.querySelector('ul');
 
   let currentPage = 1;
 
+  // Debug logging
+  console.log('Blog pagination initialized - Total posts:', totalPosts, 'Total pages:', totalPages);
+
   // Hide pagination if there are no posts or only one page
   if (totalPosts === 0 || totalPages <= 1) {
+    console.log('Hiding pagination - no posts or only one page');
     paginationNav.style.display = 'none';
+    paginationNav.classList.remove('show');
     return;
   }
 
   // Show pagination when there are multiple pages
+  console.log('Showing pagination - multiple pages detected');
   paginationNav.classList.add('show');
 
   // Initialize pagination
@@ -56,9 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
     currentPage = page;
     currentPageSpan.textContent = page;
     updatePaginationButtons();
-    
+
     // Scroll to top of post list
-    document.getElementById('post-list').scrollIntoView({ 
+    document.getElementById('post-list').scrollIntoView({
       behavior: 'smooth',
       block: 'start'
     });
@@ -90,6 +104,9 @@ document.addEventListener('DOMContentLoaded', function() {
    * Update page number buttons
    */
   function updatePageNumbers() {
+    // Check if required elements exist
+    if (!paginationUl || !pageIndexLi) return;
+    
     // Remove existing page number buttons
     const existingPageNumbers = paginationUl.querySelectorAll('.page-number');
     existingPageNumbers.forEach(el => el.remove());
@@ -148,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     li.appendChild(a);
-    
+
     // Insert before the page-index element
     paginationUl.insertBefore(li, pageIndexLi);
   }
@@ -163,23 +180,37 @@ document.addEventListener('DOMContentLoaded', function() {
     span.className = 'page-link';
     span.textContent = '...';
     li.appendChild(span);
-    
+
     // Insert before the page-index element
     paginationUl.insertBefore(li, pageIndexLi);
   }
 
   // Event listeners
-  prevButton.addEventListener('click', function(e) {
-    e.preventDefault();
-    if (currentPage > 1) {
-      showPage(currentPage - 1);
-    }
-  });
+  if (prevButton) {
+    prevButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (currentPage > 1) {
+        showPage(currentPage - 1);
+      }
+    });
+  }
 
-  nextButton.addEventListener('click', function(e) {
-    e.preventDefault();
-    if (currentPage < totalPages) {
-      showPage(currentPage + 1);
-    }
-  });
-});
+  if (nextButton) {
+    nextButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (currentPage < totalPages) {
+        showPage(currentPage + 1);
+      }
+    });
+  }
+}
+
+// Initialize pagination when DOM is ready
+document.addEventListener('DOMContentLoaded', initializeBlogPagination);
+
+// Fallback for cases where DOMContentLoaded might not fire
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeBlogPagination);
+} else {
+  initializeBlogPagination();
+}

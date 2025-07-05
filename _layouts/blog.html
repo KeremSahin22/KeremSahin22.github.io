@@ -19,7 +19,7 @@ refactor: true
   {% assign posts = posts | push: post %}
 {% endfor %}
 
-<div id="post-list" class="flex-grow-1 px-xl-1">
+<div id="post-list" class="flex-grow-1 px-xl-1" data-post-count="{{ posts.size }}">
   {% if posts.size > 0 %}
     {% for post in posts %}
       <article class="card-wrapper card post-item" data-date="{{ post.date | date: '%s' }}">

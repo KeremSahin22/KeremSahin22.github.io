@@ -7,10 +7,15 @@
 /* Blog pagination fixes */
 #blog-pagination {
   /* Prevent pagination flash before JavaScript loads */
-  display: none;
+  display: none !important;
   
   &.show {
-    display: block;
+    display: block !important;
+  }
+  
+  /* Ensure pagination is hidden on page load */
+  &:not(.show) {
+    display: none !important;
   }
 
   .pagination {
@@ -75,4 +80,18 @@
       }
     }
   }
+}
+
+/* CSS-only fallback: Hide pagination when there are no posts */
+#post-list[data-post-count="0"] + #blog-pagination {
+  display: none !important;
+}
+
+/* Additional fallback for single page (≤5 posts) */
+#post-list[data-post-count="1"] + #blog-pagination,
+#post-list[data-post-count="2"] + #blog-pagination,
+#post-list[data-post-count="3"] + #blog-pagination,
+#post-list[data-post-count="4"] + #blog-pagination,
+#post-list[data-post-count="5"] + #blog-pagination {
+  display: none !important;
 }
