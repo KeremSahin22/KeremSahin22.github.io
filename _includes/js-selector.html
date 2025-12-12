@@ -57,6 +57,8 @@
     {% assign js = page.layout %}
   {% when 'blog' %}
     {% assign js = 'blog' %}
+  {% when 'publications' %}
+    {% assign js = 'publications' %}
   {% when 'archives', 'category', 'tag' %}
     {% assign js = 'misc' %}
   {% else %}

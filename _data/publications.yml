@@ -1,0 +1,33 @@
+peer_reviewed:
+  - title: "Example Peer-Reviewed Paper 1"
+    authors: "Author Name, Co-Author Name"
+    venue: "Conference/Journal Name"
+    year: 2024
+    doi: "10.1234/example.doi"
+    pdf: "/assets/papers/example1.pdf"
+    abstract: "This is a brief abstract of the first peer-reviewed publication."
+    
+  - title: "Example Peer-Reviewed Paper 2"
+    authors: "Author Name, Another Author"
+    venue: "Another Conference Name"
+    year: 2023
+    doi: "10.1234/example.doi2"
+    pdf: "/assets/papers/example2.pdf"
+    abstract: "This is a brief abstract of the second peer-reviewed publication."
+
+preprints:
+  - title: "Example Preprint 1"
+    authors: "Author Name, Collaborator Name"
+    venue: "arXiv"
+    year: 2024
+    arxiv: "2401.12345"
+    pdf: "/assets/papers/preprint1.pdf"
+    abstract: "This is a brief abstract of the first preprint publication."
+    
+  - title: "Example Preprint 2"
+    authors: "Author Name"
+    venue: "bioRxiv"
+    year: 2024
+    doi: "10.1101/2024.01.01.123456"
+    pdf: "/assets/papers/preprint2.pdf"
+    abstract: "This is a brief abstract of the second preprint publication."
