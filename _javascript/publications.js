@@ -21,9 +21,6 @@ function initializePublications() {
 }
 
 // Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', initializePublications);
-
-// Fallback for cases where DOMContentLoaded might not fire
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initializePublications);
 } else {
