@@ -1,0 +1,127 @@
+---
+layout: default
+refactor: true
+---
+{% include lang.html %}
+
+<div id="publications-container" class="flex-grow-1 px-xl-1">
+  <!-- Peer-Reviewed Publications Section -->
+  <section class="mb-5">
+    <h2 class="section-title mb-4">
+      <i class="fas fa-book-open me-2"></i>Peer-Reviewed Publications
+    </h2>
+    
+    {% if site.data.publications.peer_reviewed.size > 0 %}
+      <div id="peer-reviewed-list">
+        {% for pub in site.data.publications.peer_reviewed %}
+          <article class="card-wrapper card publication-item mb-4" data-year="{{ pub.year }}">
+            <div class="card-body">
+              <h3 class="publication-title mb-2">{{ pub.title }}</h3>
+              
+              <div class="publication-authors text-muted mb-2">
+                <i class="fas fa-users me-1"></i>{{ pub.authors }}
+              </div>
+              
+              <div class="publication-venue mb-2">
+                <i class="fas fa-building me-1"></i>
+                <span class="fw-medium">{{ pub.venue }}</span>, {{ pub.year }}
+              </div>
+              
+              {% if pub.abstract %}
+                <div class="publication-abstract text-muted mb-3">
+                  {{ pub.abstract }}
+                </div>
+              {% endif %}
+              
+              <div class="publication-links">
+                {% if pub.doi %}
+                  <a href="https://doi.org/{{ pub.doi }}" target="_blank" class="btn btn-sm btn-outline-primary me-2 mb-2">
+                    <i class="fas fa-external-link-alt me-1"></i>DOI
+                  </a>
+                {% endif %}
+                
+                {% if pub.pdf %}
+                  <a href="{{ pub.pdf | relative_url }}" target="_blank" class="btn btn-sm btn-outline-primary me-2 mb-2">
+                    <i class="fas fa-file-pdf me-1"></i>PDF
+                  </a>
+                {% endif %}
+                
+                {% if pub.arxiv %}
+                  <a href="https://arxiv.org/abs/{{ pub.arxiv }}" target="_blank" class="btn btn-sm btn-outline-primary me-2 mb-2">
+                    <i class="fas fa-archive me-1"></i>arXiv
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="text-center py-5">
+        <i class="fas fa-book-open fa-3x text-muted mb-3"></i>
+        <h3 class="text-muted">No Peer-Reviewed Publications Yet</h3>
+        <p class="text-muted">Check back later for new publications!</p>
+      </div>
+    {% endif %}
+  </section>
+
+  <!-- Preprints Section -->
+  <section class="mb-5">
+    <h2 class="section-title mb-4">
+      <i class="fas fa-file-alt me-2"></i>Preprints
+    </h2>
+    
+    {% if site.data.publications.preprints.size > 0 %}
+      <div id="preprints-list">
+        {% for pub in site.data.publications.preprints %}
+          <article class="card-wrapper card publication-item mb-4" data-year="{{ pub.year }}">
+            <div class="card-body">
+              <h3 class="publication-title mb-2">{{ pub.title }}</h3>
+              
+              <div class="publication-authors text-muted mb-2">
+                <i class="fas fa-users me-1"></i>{{ pub.authors }}
+              </div>
+              
+              <div class="publication-venue mb-2">
+                <i class="fas fa-building me-1"></i>
+                <span class="fw-medium">{{ pub.venue }}</span>, {{ pub.year }}
+              </div>
+              
+              {% if pub.abstract %}
+                <div class="publication-abstract text-muted mb-3">
+                  {{ pub.abstract }}
+                </div>
+              {% endif %}
+              
+              <div class="publication-links">
+                {% if pub.doi %}
+                  <a href="https://doi.org/{{ pub.doi }}" target="_blank" class="btn btn-sm btn-outline-primary me-2 mb-2">
+                    <i class="fas fa-external-link-alt me-1"></i>DOI
+                  </a>
+                {% endif %}
+                
+                {% if pub.pdf %}
+                  <a href="{{ pub.pdf | relative_url }}" target="_blank" class="btn btn-sm btn-outline-primary me-2 mb-2">
+                    <i class="fas fa-file-pdf me-1"></i>PDF
+                  </a>
+                {% endif %}
+                
+                {% if pub.arxiv %}
+                  <a href="https://arxiv.org/abs/{{ pub.arxiv }}" target="_blank" class="btn btn-sm btn-outline-primary me-2 mb-2">
+                    <i class="fas fa-archive me-1"></i>arXiv
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="text-center py-5">
+        <i class="fas fa-file-alt fa-3x text-muted mb-3"></i>
+        <h3 class="text-muted">No Preprints Yet</h3>
+        <p class="text-muted">Check back later for new preprints!</p>
+      </div>
+    {% endif %}
+  </section>
+</div>
