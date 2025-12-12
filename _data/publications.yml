@@ -1,18 +1,19 @@
 peer_reviewed:
   - title: "Token Entanglement in Subliminal Learning"
     authors: "Amir Zur, Zhuofan Ying, Alexander Russell Loftus, Kerem Şahin, Steven Yu, Lucia Quirke, Tamar Rott Shaham, Natalie Shapira, Hadas Orgad, David Bau"
-    venue: "Mechanistic Interpretability Workshop at NeurIPS 2025"
+    venue: "Mechanistic Interpretability Workshop at NeurIPS"
     year: 2025
     pdf: "https://openreview.net/pdf?id=auKgpBRzIW"
     
   - title: "Analyzing Bug Life Cycles to Derive Practical Insights"
     authors: "Çağrı Eren, Kerem Şahin, and Eray Tüzün"
-    venue: "27th International Conference on Evaluation and Assessment in Software Engineering (EASE '23)"
+    venue: "Evaluation and Assessment in Software Engineering"
     year: 2023
     pdf: "https://dl.acm.org/doi/pdf/10.1145/3593434.3593504"
 
 preprints:
   - title: "In-Context Learning Without Copying"
     authors: "Kerem Şahin, Sheridan Feucht, Adam Belfki, Jannik Brinkmann, Aaron Mueller, David Bau, Chris Wendler"
+    venue: "arXiv"
     year: 2025
     pdf: "https://arxiv.org/pdf/2511.05743"
