@@ -1,0 +1,237 @@
+/* Blog list, posts and the remaining shared components */
+
+@use '../abstracts/breakpoints' as bp;
+@use 'foundation';
+
+/* --- Cards (blog list, search results, related posts) ------------------- */
+
+.card-wrapper {
+  border-radius: var(--r-md) !important;
+  border: 1px solid var(--edge);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+  transition: transform var(--dur-2) var(--ease-out),
+    border-color var(--dur-2) var(--ease-out),
+    box-shadow var(--dur-2) var(--ease-out);
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: var(--edge-strong);
+    box-shadow: var(--shadow-2);
+  }
+}
+
+#post-list {
+  .card-wrapper {
+    position: relative;
+
+    /* Activation bar on the leading edge */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 2px;
+      background: var(--flow);
+      opacity: 0;
+      transform: scaleY(0.25);
+      transition: opacity var(--dur-2) var(--ease-out),
+        transform var(--dur-3) var(--ease-out);
+      z-index: 1;
+    }
+
+    &:hover::before {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem !important;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--ink-strong);
+  }
+
+  .card-text {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--ink-dim);
+  }
+
+  .post-meta {
+    font-family: var(--font-mono);
+    font-size: 0.68rem !important;
+    letter-spacing: 0.04em;
+    color: var(--ink-dim);
+
+    i {
+      color: var(--sig-1);
+      opacity: 0.75;
+    }
+  }
+
+  .pin {
+    color: var(--sig-3);
+  }
+}
+
+/* --- Pagination --------------------------------------------------------- */
+
+.pagination {
+  gap: 0.35rem;
+
+  .page-link {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    border-radius: var(--r-sm) !important;
+    border: 1px solid var(--edge);
+    background: var(--surface-1);
+    color: var(--ink-dim);
+    transition: color var(--dur-1) linear,
+      border-color var(--dur-2) var(--ease-out),
+      background-color var(--dur-2) var(--ease-out);
+
+    &:hover {
+      color: var(--ink-strong);
+      border-color: var(--sig-1);
+      background: var(--sig-1-fade);
+    }
+  }
+
+  .active .page-link,
+  .page-item.active .page-link {
+    color: var(--ink-strong) !important;
+    background: var(--flow-soft) !important;
+    border-color: var(--sig-1) !important;
+  }
+
+  .page-index {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+}
+
+/* --- Posts -------------------------------------------------------------- */
+
+.post {
+  h1 {
+    font-size: clamp(1.9rem, 4vw, 2.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  .post-meta {
+    font-family: var(--font-mono);
+    font-size: 0.7rem !important;
+    letter-spacing: 0.04em;
+  }
+
+  .post-tail-wrapper {
+    border-top: 1px solid var(--edge);
+  }
+}
+
+.content {
+  font-size: 1rem;
+  line-height: 1.8;
+
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--edge);
+  }
+
+  blockquote {
+    border-left-color: var(--sig-1) !important;
+  }
+
+  > blockquote[class^='prompt-'] {
+    border-radius: var(--r-md);
+    border-left-width: 2px;
+  }
+
+  img {
+    border-radius: var(--r-sm);
+  }
+}
+
+/* Prose links live outside `.content` on the home page too */
+.about-me-section a {
+  color: var(--ink-strong);
+  text-decoration: none;
+  background-image: var(--flow);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  transition: background-size var(--dur-2) var(--ease-out),
+    color var(--dur-1) linear;
+
+  &:hover {
+    color: var(--sig-2);
+    background-size: 100% 2px;
+  }
+}
+
+/* --- Empty states ------------------------------------------------------- */
+
+.empty-state {
+  padding: 3.5rem 1.5rem;
+  border: 1px dashed var(--edge-strong);
+  border-radius: var(--r-md);
+  text-align: center;
+  background: linear-gradient(var(--surface-1), transparent);
+}
+
+.empty-state-title {
+  @extend %mono-label;
+
+  margin-bottom: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--ink);
+}
+
+.empty-state-text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ink-dim);
+}
+
+/* --- Tags, categories, archives ---------------------------------------- */
+
+.post-tags .post-tag,
+.tag {
+  border-radius: 999px !important;
+  border: 1px solid var(--edge);
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  transition: color var(--dur-1) linear,
+    border-color var(--dur-2) var(--ease-out),
+    background-color var(--dur-2) var(--ease-out);
+
+  &:hover {
+    border-color: var(--sig-2);
+    background: var(--sig-2-fade);
+  }
+}
+
+#archives li:nth-child(odd) {
+  background-image: none;
+}
+
+#archives {
+  .date.month,
+  .date.day {
+    font-family: var(--font-mono);
+  }
+}

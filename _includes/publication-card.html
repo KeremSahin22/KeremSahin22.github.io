@@ -1,0 +1,57 @@
+<!-- A single publication entry. Expects `include.pub`. -->
+
+{% assign pub = include.pub %}
+
+<!-- Emphasise the site owner among the author list -->
+{% assign author_line = pub.authors
+  | replace: 'Kerem Şahin', '<b class="pub-me">Kerem Şahin</b>'
+  | replace: 'Kerem Sahin', '<b class="pub-me">Kerem Sahin</b>'
+%}
+
+<li class="pub publication-item" data-year="{{ pub.year }}">
+  <div class="pub-rail">
+    <span class="pub-year">{{ pub.year }}</span>
+    <span class="pub-stream" aria-hidden="true"></span>
+  </div>
+
+  <div class="pub-body">
+    <h3 class="pub-title">{{ pub.title }}</h3>
+
+    <p class="pub-authors">{{ author_line }}</p>
+
+    {% assign yy = pub.year | append: '' | slice: -2, 2 %}
+    <p class="pub-venue">
+      <span class="pub-venue-name">{{ pub.venue }} '{{ yy }}</span>
+    </p>
+
+    {% if pub.abstract %}
+      <p class="pub-abstract">{{ pub.abstract }}</p>
+    {% endif %}
+
+    <div class="pub-links">
+      {% if pub.pdf %}
+        <a href="{{ pub.pdf | relative_url }}" target="_blank" rel="noopener" class="pub-link">
+          <i class="fas fa-file-pdf"></i><span>pdf</span>
+        </a>
+      {% endif %}
+
+      {% if pub.arxiv %}
+        <a href="https://arxiv.org/abs/{{ pub.arxiv }}" target="_blank" rel="noopener" class="pub-link">
+          <i class="fas fa-archive"></i><span>arXiv</span>
+        </a>
+      {% endif %}
+
+      {% if pub.doi %}
+        <a href="https://doi.org/{{ pub.doi }}" target="_blank" rel="noopener" class="pub-link">
+          <i class="fas fa-link"></i><span>doi</span>
+        </a>
+      {% endif %}
+
+      {% if pub.code %}
+        <a href="{{ pub.code }}" target="_blank" rel="noopener" class="pub-link">
+          <i class="fas fa-code"></i><span>code</span>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</li>

@@ -1,0 +1,182 @@
+/* Site chrome: topbar, search, footer, back-to-top, TOC panel */
+
+@use '../abstracts/breakpoints' as bp;
+@use 'foundation';
+
+#topbar-wrapper {
+  position: relative;
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+
+  /* A hairline trace under the bar, brightest at the left edge */
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      var(--sig-1) 0%,
+      var(--sig-2) 22%,
+      var(--edge) 60%,
+      transparent 100%
+    );
+    opacity: 0.55;
+  }
+
+  /*
+   * Scroll depth as a training curve: the accent fills the bar as the page is
+   * read. Degrades to nothing where scroll-driven animations are unsupported.
+   */
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--flow);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    z-index: 1;
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  #topbar-wrapper::before {
+    animation: scroll-depth linear both;
+    animation-timeline: scroll(root block);
+  }
+
+  @keyframes scroll-depth {
+    from {
+      transform: scaleX(0);
+    }
+
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
+
+#breadcrumb {
+  @extend %mono-label;
+
+  font-size: 0.68rem !important;
+
+  span:not(:last-child)::after {
+    content: '/';
+    color: var(--sig-1);
+    padding: 0 0.45rem;
+  }
+
+  a {
+    color: var(--ink-dim);
+
+    &:hover {
+      color: var(--sig-2);
+    }
+  }
+}
+
+#topbar-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+#search-wrapper,
+search#search {
+  border-radius: 999px;
+  border: 1px solid var(--edge);
+  background: var(--surface-1);
+  transition: border-color var(--dur-2) var(--ease-out),
+    box-shadow var(--dur-2) var(--ease-out);
+
+  &:focus-within {
+    border-color: var(--sig-1);
+    box-shadow: 0 0 0 3px var(--sig-glow);
+  }
+
+  #search-input {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+
+    &::placeholder {
+      color: var(--ink-dim);
+      opacity: 0.8;
+    }
+  }
+}
+
+#search-results {
+  .card-wrapper {
+    border-radius: var(--r-md);
+  }
+}
+
+footer {
+  background: transparent;
+  border-top: 1px solid var(--edge);
+
+  p {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-dim);
+  }
+}
+
+#back-to-top {
+  border-radius: var(--r-sm);
+  border: 1px solid var(--edge);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-2);
+  transition: color var(--dur-1) linear, transform var(--dur-2) var(--ease-out),
+    border-color var(--dur-2) var(--ease-out);
+
+  &:hover {
+    color: var(--sig-2);
+    border-color: var(--sig-1);
+    transform: translateY(-2px);
+  }
+}
+
+/* Table of contents: a layer index for the current document */
+#toc-wrapper {
+  border-left: 1px solid var(--edge);
+  padding-left: 1rem;
+
+  .toc-header {
+    @extend %mono-label;
+
+    font-size: 0.66rem;
+  }
+
+  .toc-link {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    border-radius: var(--r-sm);
+    transition: color var(--dur-1) linear,
+      background-color var(--dur-2) var(--ease-out);
+  }
+
+  .active .toc-link {
+    color: var(--sig-2) !important;
+    background: var(--sig-2-fade);
+    font-weight: 600;
+  }
+}
+
+/* Sidebar trigger / mobile buttons pick up the accent on press */
+#sidebar-trigger,
+#search-trigger,
+#search-cancel {
+  color: var(--ink-dim);
+
+  &:hover {
+    color: var(--sig-2);
+  }
+}

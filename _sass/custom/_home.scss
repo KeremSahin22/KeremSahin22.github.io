@@ -1,0 +1,266 @@
+/* Home: a hero pairing the name with a traced circuit, then the prose */
+
+@use '../abstracts/breakpoints' as bp;
+@use 'foundation';
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.25rem;
+  padding: 1rem 0 2.75rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--edge);
+
+  @include bp.lt(bp.get(lg)) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2.25rem;
+    padding-top: 0;
+  }
+}
+
+.hero-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.hero-eyebrow {
+  @extend %mono-label;
+
+  margin-bottom: 0.85rem;
+  color: var(--sig-2);
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6.5vw, 4rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink-strong);
+  margin: 0 0 1.1rem;
+
+  /* The name itself carries the residual-stream gradient */
+  background: linear-gradient(
+    100deg,
+    var(--ink-strong) 0%,
+    var(--ink-strong) 45%,
+    var(--sig-1) 78%,
+    var(--sig-2) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  margin-bottom: 1.6rem;
+  color: var(--ink);
+}
+
+.hero-line-key {
+  color: var(--ink-dim);
+
+  &::after {
+    content: ':';
+    color: var(--sig-1);
+  }
+}
+
+.hero-line-val {
+  padding-bottom: 1px;
+  border-bottom: 1px dashed var(--edge-strong);
+}
+
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.33rem 0.55rem;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--edge);
+  background: var(--surface-1);
+  color: var(--ink-dim) !important;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-decoration: none !important;
+  transition: color var(--dur-1) linear, border-color var(--dur-2) var(--ease-out),
+    transform var(--dur-2) var(--ease-out),
+    box-shadow var(--dur-2) var(--ease-out);
+
+  i {
+    font-size: 0.85rem;
+  }
+
+  &:hover {
+    color: var(--ink-strong) !important;
+    border-color: var(--sig-1);
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 3px var(--sig-glow);
+  }
+}
+
+/* --- The circuit -------------------------------------------------------- */
+
+.circuit {
+  flex: none;
+  margin: 0;
+  padding: 1.25rem;
+  border-radius: var(--r-md);
+  border: 1px solid var(--edge);
+  background: radial-gradient(
+      ellipse 70% 70% at 50% 45%,
+      var(--sig-1-fade) 0%,
+      transparent 70%
+    ),
+    var(--surface-1);
+  box-shadow: var(--shadow-2);
+
+  @include bp.lt(bp.get(lg)) {
+    align-self: center;
+  }
+
+  svg {
+    display: block;
+    width: clamp(12rem, 15vw, 16rem);
+    height: auto;
+    overflow: visible;
+  }
+}
+
+.circuit-stop-1 {
+  stop-color: var(--sig-1);
+}
+
+.circuit-stop-2 {
+  stop-color: var(--sig-2);
+}
+
+/* The dim lattice of everything the circuit could have used */
+.circuit-edges line {
+  stroke: var(--ink-dim);
+  stroke-width: 0.75;
+  opacity: 0.28;
+}
+
+.circuit-node {
+  fill: var(--surface-2);
+  stroke: var(--ink-dim);
+  stroke-width: 0.75;
+  opacity: 0.5;
+}
+
+/* The traced paths */
+.circuit-path {
+  fill: none;
+  stroke: url('#circuit-flow');
+  stroke-width: 1.75;
+  stroke-linejoin: round;
+  opacity: 0.5;
+}
+
+/* A signal travelling along each path */
+.circuit-pulse {
+  fill: none;
+  stroke: url('#circuit-flow');
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  /* Against pathLength 100: one short pulse in flight per path */
+  stroke-dasharray: 6 94;
+  animation: circuit-travel 4.5s linear infinite;
+
+  + .circuit-pulse {
+    animation-delay: -2.25s;
+  }
+}
+
+.circuit-node-lit {
+  fill: var(--surface-1);
+  stroke: url('#circuit-flow');
+  stroke-width: 1.75;
+  opacity: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: circuit-node-glow 4.5s var(--ease-in-out) infinite;
+  animation-delay: calc(var(--d, 0) * 0.35s);
+}
+
+@keyframes circuit-travel {
+  from {
+    stroke-dashoffset: 100;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes circuit-node-glow {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.22);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .circuit-pulse,
+  .circuit-node-lit {
+    animation: none;
+  }
+}
+
+/* --- Prose -------------------------------------------------------------- */
+
+.about-me-section {
+  max-width: 46rem;
+
+  h1 {
+    @extend %mono-label;
+
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-size: 0.7rem;
+    margin-bottom: 1.25rem;
+
+    &::after {
+      @extend %trace;
+
+      flex: 1 1 auto;
+    }
+  }
+
+  p {
+    font-size: 1.02rem;
+    line-height: 1.85;
+    margin-bottom: 1.35rem;
+    color: var(--ink);
+  }
+
+  /* Lead paragraph */
+  > p:first-of-type {
+    font-size: 1.14rem;
+    line-height: 1.75;
+    color: var(--ink-strong);
+  }
+}

@@ -1,0 +1,139 @@
+/* Foundation: page canvas, typography and shared primitives */
+
+@use '../abstracts/breakpoints' as bp;
+
+body {
+  font-family: var(--font-body);
+  font-feature-settings: 'cv11', 'ss01';
+  letter-spacing: -0.005em;
+
+  /* The canvas: a faint neuron lattice under a soft activation glow */
+  background-color: var(--surface-0);
+  background-image: radial-gradient(
+      ellipse 80% 60% at 15% -10%,
+      var(--sig-1-fade) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 70% 50% at 100% 0%,
+      var(--sig-2-fade) 0%,
+      transparent 65%
+    ),
+    radial-gradient(var(--lattice) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, var(--lattice-size) var(--lattice-size);
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-attachment: fixed;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.site-title,
+#topbar-title {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background: var(--sig-1-fade);
+  color: var(--ink-strong);
+}
+
+:focus-visible {
+  outline: 2px solid var(--sig-1);
+  outline-offset: 2px;
+}
+
+@include bp.lg {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--edge-strong) transparent;
+  }
+}
+
+/* --- Shared primitives ------------------------------------------------- */
+
+/* A monospace, uppercase micro-label — used for metadata and eyebrows */
+%mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.mono-label {
+  @extend %mono-label;
+}
+
+/* A hairline that fades out, like a circuit trace leaving the die */
+%trace {
+  content: '';
+  height: 1px;
+  background: linear-gradient(90deg, var(--edge-strong), transparent);
+}
+
+/* Section headings: an indexed layer marker plus a trace */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink-strong);
+
+  /* The framework ships icons inside these headings; the marker replaces them */
+  > i {
+    display: none;
+  }
+
+  &::before {
+    content: '';
+    flex: none;
+    width: 3px;
+    height: 1.15em;
+    border-radius: 2px;
+    background: var(--flow);
+  }
+
+  &::after {
+    @extend %trace;
+
+    flex: 1 1 auto;
+  }
+}
+
+/* Links inside prose get an animated underline that "activates" on hover */
+.content a:not(.btn):not(.no-underline) {
+  color: var(--ink-strong);
+  text-decoration: none;
+  background-image: var(--flow);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  transition: background-size var(--dur-2) var(--ease-out),
+    color var(--dur-1) linear;
+
+  &:hover {
+    color: var(--sig-2);
+    background-size: 100% 2px;
+  }
+}
+
+code,
+kbd,
+pre,
+samp,
+.highlight {
+  font-family: var(--font-mono);
+}
+
+blockquote {
+  border-left-width: 2px !important;
+}

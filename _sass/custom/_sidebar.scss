@@ -1,0 +1,217 @@
+/* Sidebar: an instrument panel. Nav items read as indexed layers of a stack. */
+
+@use '../abstracts/breakpoints' as bp;
+@use 'foundation';
+
+#sidebar {
+  background:
+    linear-gradient(180deg, var(--sig-1-fade) 0%, transparent 40%),
+    var(--surface-1);
+  border-right: 1px solid var(--edge);
+
+  /* A residual stream running the full height of the panel */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 1px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      var(--sig-1) 18%,
+      var(--sig-2) 62%,
+      transparent 100%
+    );
+    opacity: 0.5;
+  }
+
+  .profile-wrapper {
+    position: relative;
+  }
+
+  #avatar {
+    position: relative;
+    overflow: visible;
+    box-shadow: none;
+
+    /* A rotating conic ring — the attention pattern around the node */
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        var(--sig-1),
+        var(--sig-2),
+        var(--sig-3),
+        var(--sig-1)
+      );
+      z-index: -1;
+      opacity: 0.9;
+      animation: spin-slow 14s linear infinite;
+      transition: opacity var(--dur-2) linear, filter var(--dur-2) linear;
+    }
+
+    img {
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px var(--surface-1);
+
+      /* The ring, not the portrait, responds to the pointer */
+      &:hover {
+        transform: none;
+      }
+    }
+
+    &:hover::before {
+      opacity: 1;
+      filter: blur(1px) saturate(1.3);
+    }
+  }
+
+  .site-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--ink-strong);
+  }
+
+  .site-subtitle {
+    @extend %mono-label;
+
+    font-style: normal !important;
+    font-size: 0.66rem;
+    line-height: 1.7;
+    letter-spacing: 0.1em;
+    max-width: 15rem;
+  }
+
+  ul {
+    counter-reset: layer;
+
+    li.nav-item {
+      counter-increment: layer;
+      opacity: 1;
+
+      a.nav-link {
+        position: relative;
+        border-radius: var(--r-sm);
+        font-family: var(--font-display);
+        font-weight: 500;
+        color: var(--ink-dim);
+        transition: color var(--dur-1) linear,
+          background-color var(--dur-2) var(--ease-out);
+
+        /* The layer index, in the manner of a residual-stream position */
+        &::before {
+          content: counter(layer, decimal-leading-zero);
+          font-family: var(--font-mono);
+          font-size: 0.62rem;
+          letter-spacing: 0.06em;
+          color: var(--ink-dim);
+          opacity: 0.55;
+          margin-right: 0.9rem;
+          width: 1.4rem;
+          flex: none;
+        }
+
+        i {
+          display: none;
+        }
+
+        span {
+          font-size: 0.86rem;
+          font-weight: 600;
+          letter-spacing: 0.02em;
+          text-transform: none;
+        }
+
+        &:hover {
+          color: var(--ink-strong);
+          background-color: var(--sig-1-fade);
+        }
+      }
+
+      /* The active layer: a glowing node tapped off the stream */
+      &.active a.nav-link {
+        color: var(--ink-strong);
+        background: var(--flow-soft);
+        box-shadow: inset 0 0 0 1px var(--edge);
+
+        &::before {
+          color: var(--sig-2);
+          opacity: 1;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          left: -1.5rem;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: var(--sig-2);
+          box-shadow: 0 0 0 4px var(--sig-glow);
+
+          @include bp.xxxl {
+            left: -2.75rem;
+          }
+        }
+      }
+    }
+  }
+
+  .sidebar-bottom {
+    /* Tightened so the full set of contact buttons stays on one row */
+    padding-left: 1.5rem;
+
+    a:not(:last-child) {
+      margin-right: 0.5rem;
+
+      @include bp.xxxl {
+        margin-right: 0.7rem;
+      }
+    }
+
+    a,
+    #mode-toggle {
+      border-radius: var(--r-sm);
+      background-color: var(--surface-2);
+      color: var(--ink-dim);
+      transition: color var(--dur-1) linear,
+        background-color var(--dur-2) var(--ease-out),
+        transform var(--dur-2) var(--ease-out);
+
+      &:not(:focus-visible) {
+        box-shadow: inset 0 0 0 1px var(--edge);
+      }
+
+      &:hover {
+        color: var(--ink-strong);
+        background: var(--flow-soft);
+        transform: translateY(-2px);
+      }
+    }
+
+    .icon-border {
+      background-color: var(--edge-strong);
+    }
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #sidebar #avatar::before {
+    animation: none;
+  }
+}

@@ -1,0 +1,180 @@
+/*
+ * Design tokens — "Residual Stream"
+ *
+ * The visual language borrows from mechanistic interpretability: layer stacks,
+ * residual streams, attention maps and activation heatmaps. Two accents form a
+ * "signal" gradient (violet -> cyan) with a warm amber reserved for the points
+ * of highest activation.
+ */
+
+/* Shared, mode-independent tokens */
+@mixin shared {
+  --font-display: 'Space Grotesk', 'Lato', system-ui, sans-serif;
+  --font-body: 'Inter', 'Source Sans Pro', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', menlo,
+    monospace;
+
+  /* Signal gradient: the residual stream flowing through layers */
+  --flow: linear-gradient(115deg, var(--sig-1) 0%, var(--sig-2) 100%);
+  --flow-soft: linear-gradient(
+    115deg,
+    var(--sig-1-fade) 0%,
+    var(--sig-2-fade) 100%
+  );
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-1: 140ms;
+  --dur-2: 260ms;
+  --dur-3: 520ms;
+
+  /* Geometry */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --lattice-size: 22px;
+}
+
+@mixin dark {
+  --surface-0: #0b0d12;
+  --surface-1: #12151d;
+  --surface-2: #171b25;
+  --surface-glass: rgb(11, 13, 18, 0.72);
+  --edge: rgb(255, 255, 255, 0.07);
+  --edge-strong: rgb(255, 255, 255, 0.14);
+  --sig-1: #8b7cff;
+  --sig-2: #35d6e3;
+  --sig-3: #f2b14b;
+  --sig-1-fade: rgb(139, 124, 255, 0.16);
+  --sig-2-fade: rgb(53, 214, 227, 0.16);
+  --sig-glow: rgb(139, 124, 255, 0.28);
+  --lattice: rgb(255, 255, 255, 0.045);
+  --ink-strong: #eef1f7;
+  --ink: #b9c0cd;
+  --ink-dim: #7c8493;
+  --shadow-1: 0 1px 2px rgb(0, 0, 0, 0.4);
+  --shadow-2: 0 10px 30px -12px rgb(0, 0, 0, 0.7);
+  --shadow-3: 0 24px 60px -20px rgb(0, 0, 0, 0.85);
+}
+
+@mixin light {
+  --surface-0: #fbfaf7;
+  --surface-1: #ffffff;
+  --surface-2: #f5f4f0;
+  --surface-glass: rgb(251, 250, 247, 0.78);
+  --edge: rgb(19, 26, 38, 0.09);
+  --edge-strong: rgb(19, 26, 38, 0.18);
+  --sig-1: #5b46d9;
+  --sig-2: #0e93a6;
+  --sig-3: #c07a12;
+  --sig-1-fade: rgb(91, 70, 217, 0.1);
+  --sig-2-fade: rgb(14, 147, 166, 0.1);
+  --sig-glow: rgb(91, 70, 217, 0.18);
+  --lattice: rgb(19, 26, 38, 0.055);
+  --ink-strong: #10141c;
+  --ink: #414855;
+  --ink-dim: #767d8b;
+  --shadow-1: 0 1px 2px rgb(19, 26, 38, 0.06);
+  --shadow-2: 0 10px 28px -14px rgb(19, 26, 38, 0.22);
+  --shadow-3: 0 24px 56px -22px rgb(19, 26, 38, 0.28);
+}
+
+/*
+ * Re-map the framework's variables onto the tokens above so every inherited
+ * Chirpy component picks up the new palette without being restyled one by one.
+ */
+@mixin framework-bridge {
+  --main-bg: var(--surface-0);
+  --main-border-color: var(--edge);
+  --mask-bg: var(--surface-2);
+  --text-color: var(--ink);
+  --text-muted-color: var(--ink-dim);
+  --text-muted-highlight-color: var(--ink);
+  --heading-color: var(--ink-strong);
+  --label-color: var(--ink-dim);
+  --link-color: var(--sig-2);
+  --link-underline-color: var(--edge-strong);
+  --blockquote-border-color: var(--edge-strong);
+  --blockquote-text-color: var(--ink-dim);
+  --button-bg: var(--surface-1);
+  --btn-border-color: var(--edge);
+  --btn-backtotop-color: var(--ink);
+  --btn-backtotop-border-color: var(--edge);
+  --card-bg: var(--surface-1);
+  --card-hovor-bg: var(--surface-2);
+  --card-header-bg: var(--surface-2);
+  --card-shadow: var(--shadow-1);
+  --site-title-color: var(--ink-strong);
+  --site-subtitle-color: var(--ink-dim);
+  --sidebar-bg: var(--surface-1);
+  --sidebar-border-color: var(--edge);
+  --sidebar-muted-color: var(--ink-dim);
+  --sidebar-active-color: var(--ink-strong);
+  --sidebar-hover-bg: var(--sig-1-fade);
+  --sidebar-btn-bg: var(--surface-2);
+  --sidebar-btn-color: var(--ink-dim);
+  --avatar-border-color: var(--edge-strong);
+  --topbar-bg: var(--surface-glass);
+  --topbar-text-color: var(--ink);
+  --search-border-color: var(--edge);
+  --search-icon-color: var(--ink-dim);
+  --input-focus-border-color: var(--sig-1);
+  --post-list-text-color: var(--ink);
+  --btn-patinator-text-color: var(--ink);
+  --btn-paginator-hover-color: var(--surface-2);
+  --toc-highlight: var(--sig-2);
+  --toc-popup-border-color: var(--edge);
+  --btn-share-color: var(--ink-dim);
+  --btn-share-hover-color: var(--sig-2);
+  --tag-border: var(--edge-strong);
+  --tag-shadow: var(--edge);
+  --tag-hover: var(--sig-1-fade);
+  --search-tag-bg: var(--surface-2);
+  --dash-color: var(--edge-strong);
+  --categories-border: var(--edge);
+  --categories-hover-bg: var(--surface-2);
+  --timeline-color: var(--edge);
+  --timeline-node-bg: var(--sig-1);
+  --timeline-year-dot-color: var(--surface-0);
+  --language-border-color: var(--edge);
+  --highlight-bg-color: var(--surface-2);
+  --inline-code-bg: var(--sig-1-fade);
+  --code-header-muted-color: var(--edge-strong);
+  --code-header-text-color: var(--ink-dim);
+  --code-header-icon-color: var(--ink-dim);
+}
+
+/*
+ * Mirrors the framework's own light/dark resolution (see base/_base.scss) so
+ * that these declarations land with identical specificity and win on order.
+ */
+html {
+  @include shared;
+
+  @media (prefers-color-scheme: light) {
+    &:not([data-mode]),
+    &[data-mode='light'] {
+      @include light;
+      @include framework-bridge;
+    }
+
+    &[data-mode='dark'] {
+      @include dark;
+      @include framework-bridge;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    &:not([data-mode]),
+    &[data-mode='dark'] {
+      @include dark;
+      @include framework-bridge;
+    }
+
+    &[data-mode='light'] {
+      @include light;
+      @include framework-bridge;
+    }
+  }
+}
