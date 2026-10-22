@@ -16,7 +16,7 @@ timezone: America/New_York
 
 title: Kerem Şahin # the main title
 
-tagline: MS CS @ Northeastern | Fulbright Scholar # it will display as the subtitle
+tagline: Research Assistant @ Northeastern # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   Personal Website
@@ -140,7 +140,9 @@ assets:
 pwa:
   enabled: true # The option for PWA feature (installable)
   cache:
-    enabled: true # The option for PWA offline cache
+    # Disabled: the service worker kept showing "A new version of content is available".
+    # With this off, app.js unregisters any service worker left in visitors' browsers.
+    enabled: false # The option for PWA offline cache
     # Paths defined here will be excluded from the PWA cache.
     # Usually its value is the `baseurl` of another website that
     # shares the same domain name as the current website.
